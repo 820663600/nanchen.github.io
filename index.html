@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>客户宝 - 投诉平台</title>
@@ -345,8 +347,16 @@
             }
         }
     });
+        // 处理404重定向
+(function() {
+    var redirect = new URLSearchParams(window.location.search).get('redirect');
+    if (redirect) {
+        history.replaceState(null, null, redirect);
+    }
+})();
     </script>
 </body>
 </html>
+
 
 
