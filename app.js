@@ -187,12 +187,18 @@ const ComplaintPage = {
                 data: {
                     sn: this.sn
                 },
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: false
+                },
                 success: function(data) {
+                    console.log('投诉类型 API 返回:', data);
                     const res = typeof data === 'string' ? JSON.parse(data) : data;
-                    if (res.code === 1) {
+                    if (res.code === 1 && res.data && res.data.types && res.data.types.length > 0) {
                         that.allList = res.data.types;
+                        console.log('加载投诉类型成功:', that.allList);
                     } else {
-                        console.error('加载投诉类型失败:', res.msg);
+                        console.error('加载投诉类型失败:', res.msg || '无数据');
                         // 使用默认类型
                         that.allList = [
                             {tid: 1, pid: 0, text: '服务问题'},
@@ -201,8 +207,10 @@ const ComplaintPage = {
                         ];
                     }
                 },
-                error: function() {
-                    console.error('加载投诉类型失败: 网络错误');
+                error: function(xhr, status, error) {
+                    console.error('加载投诉类型失败 - 网络错误:', error);
+                    console.error('响应状态:', xhr.status);
+                    console.error('响应内容:', xhr.responseText);
                     // 使用默认类型
                     that.allList = [
                         {tid: 1, pid: 0, text: '服务问题'},
@@ -234,28 +242,68 @@ const ComplaintPage = {
         toUpload(e) {
             const that = this;
             const files = e.target.files;
+            
+            if (files.length === 0) {
+                return;
+            }
+            
+            console.log('开始上传图片，文件数量:', files.length);
+            
             for (let i = 0, len = files.length; i < len; ++i) {
-                if(this.upload_files.length < 9) {
-                    const file = files[i];
-                    const formData = new FormData();
-                    formData.append('img', file);
-                    $.ajax({
-                        type: "POST",
-                        url: API_BASE_URL + "/upload_img.php",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function(data) {
-                            const res = typeof data === 'string' ? JSON.parse(data) : data;
-                            if(res.code === 1 && res.data.url) {
-                                that.upload_files.push(res.data.url);
-                            }
-                        },
-                        error: function() {
-                            alert('图片上传失败');
-                        }
-                    })
+                if(this.upload_files.length >= 9) {
+                    alert('最多只能上传 9 张图片');
+                    break;
                 }
+                
+                const file = files[i];
+                
+                // 验证文件类型
+                if (!file.type.match('image.*')) {
+                    alert('请上传图片文件');
+                    continue;
+                }
+                
+                // 验证文件大小 (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('图片大小不能超过 5MB');
+                    continue;
+                }
+                
+                console.log('上传图片:', file.name, '大小:', (file.size / 1024).toFixed(2) + 'KB');
+                
+                const formData = new FormData();
+                formData.append('img', file);
+                
+                $.ajax({
+                    type: "POST",
+                    url: API_BASE_URL + "/upload_img.php",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: false
+                    },
+                    success: function(data) {
+                        console.log('图片上传响应:', data);
+                        const res = typeof data === 'string' ? JSON.parse(data) : data;
+                        if(res.code === 1 && res.data && res.data.url) {
+                            // 添加完整的 URL前缀
+                            const imageUrl = res.data.url.startsWith('http') ? res.data.url : (API_BASE_URL.replace('/api', '') + res.data.url);
+                            that.upload_files.push(imageUrl);
+                            console.log('图片上传成功:', imageUrl);
+                        } else {
+                            console.error('图片上传失败:', res.msg || '未知错误');
+                            alert('图片上传失败：' + (res.msg || '请重试'));
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('图片上传失败 - 网络错误:', error);
+                        console.error('响应状态:', xhr.status);
+                        console.error('响应内容:', xhr.responseText);
+                        alert('图片上传失败，请检查网络连接');
+                    }
+                });
             }
         },
         submit() {
