@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<script>
+// 处理GitHub Pages重定向
+(function() {
+    var redirect = new URLSearchParams(window.location.search).get('redirect');
+    if (redirect) {
+        // 从redirect参数恢复路径
+        history.replaceState(null, null, redirect);
+    }
+})();
+</script>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -192,4 +202,5 @@
     <script src="./assets/js/app.js"></script>
 </body>
 </html>
+
 
