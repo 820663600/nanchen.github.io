@@ -1,7 +1,7 @@
 // API配置
 const API_CONFIG = {
     // 后端API基础地址，需要根据实际部署情况修改
-    BASE_URL: 'https://qyts.wosb.cn',
+    BASE_URL: 'http://b3v.cn',
     
     // API端点
     endpoints: {
@@ -317,3 +317,4 @@ var app = new Vue({
 
     }
 });
+
