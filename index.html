@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>投诉</title>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.4/weui.min.css">
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+        .btnknow {
+            font-size: 15px;
+            color: #51628B;
+            text-align: center;
+            margin-top: 20px;
+        }
+        body{
+            max-width: 600px;
+            margin:auto;
+        }
+        
+        .x-title{
+            padding-top: 16px;
+            padding-bottom: 3px;
+            padding-left: 16px;
+            padding-right: 16px;
+            color: rgba(0,0,0,.5);
+            color: var(--weui-FG-1);
+            font-size: 14px;
+            line-height: 1.4;
+            background-color:#ECECEC
+        }
+        
+        .required-mark {
+            color: red;
+        }
+    </style>
+</head>
+<body data-weui-theme="light">
+    <div id="app" v-cloak>
+        <!-- 投诉须知页面 -->
+        <div v-if="currentPage === 'notice'">
+            <div style="text-align:center;margin-top:40px">
+                <h2>投诉须知</h2>
+            </div>
+            <div style="font-size:19px;margin:45px 5px 0px 5px;">
+                你应保证你的投诉行为基于善意，并代表你本人真实意思。作为中立的平台服务者，收到你投诉后，会尽快按照相关法律法规的规定独立判断并进行处理。我们将会采取合理的措施保护你的个人信息；除法律法规规定的情形外，未经用户许可不会向第三方公开、透露你的个人信息。<br>
+                <p></p>
+                根据《中华人民共和国民法典》的规定，权利人在通知网络服务提供者时应当提供权利人的真实身份信息。因此，当你提交侵权投诉及冒充他人投诉时，我们根据你的主体类型，收集你的相关信息<span style="font-weight: 600;margin: 0; padding: 0;">（含敏感个人信息），包括你的姓名或名称、证件号码或者组织证件号、证件正反面照片、公司或组织证件照片，收集前述内容的目的在于核验你的身份信息的真实性。如果你委托代理人进行投诉，我们还将收集代理人的<span style="text-decoration: underline;">姓名</span>、<span style="text-decoration: underline;">证件号码</span>、<span style="text-decoration: underline;">证件正反面照片、授权委托书照片，</span></span>收集前述信息在于核验代理人信息的真实性。你可以拒绝提供，如果拒绝提供，我们可能无法对你的投诉进行评估，但不影响其他功能的正常使用。<br>
+            </div>
+            <div style="text-align: center; margin: 30px 0;">
+                <button onclick="backToComplaint()" style="background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer;">开始投诉</button>
+            </div>
+        </div>
+        
+        <!-- 投诉表单页面 -->
+        <div v-else>
+        <!-- 投诉表单页面 -->
+        <div v-if="!submitSuccess">
+            <!-- 投诉类型选择 -->
+            <div v-if="hasChildTypes || currentTid === 0">
+                <div class="x-title">
+                    请选择投诉该账号的原因：
+                </div>
+                <div class="weui-cells">
+                    <a href="javascript:" class="weui-cell weui-cell_access" v-for="item in allList" v-if="currentTid == item.pid" @click="change(item)">
+                        <div class="weui-cell__bd">
+                            <p>{{item.text}}</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                </div>
+                <div class="btnknow" onclick="go_know()">投诉须知</div>
+            </div>
+            
+            <!-- 投诉表单 -->
+            <div class="weui-form" v-else style="padding:0px">
+                <div class="weui-form__control-area" style="margin:24px 0px">
+                    <!-- 手机号码 -->
+                    <div class="weui-cells__group weui-cells__group_form">
+                        <div class="weui-cells weui-cells_form">
+                            <div class="weui-cell weui-cell_active">
+                                <div class="weui-cell__hd">
+                                    <label class="weui-label">
+                                        手机号码 <span class="required-mark">*</span>
+                                    </label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <input placeholder="填写您的手机号码" class="weui-input" v-model="phone">
+                                </div>
+                                <div>
+                                    <span v-if="!valid" style="color:rgb(244,127,143)">手机号码不正确</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 图片上传（必填） -->
+                    <div class="weui-cells__group weui-cells__group_form">
+                        <div class="weui-cell weui-cell_uploader">
+                            <div class="weui-cell__bd">
+                                <div class="weui-uploader">
+                                    <div class="weui-uploader__hd">
+                                        <p class="weui-uploader__title">图片证据 <span class="required-mark">*</span></p>
+                                        <div class="weui-uploader__info">{{upload_files.length}}/9</div>
+                                    </div>
+                                    <div class="weui-uploader__bd">
+                                        <ul class="weui-uploader__files" id="uploaderFiles">
+                                            <li class="weui-uploader__file" :style="'background-image:url('+pic+')'" v-for="pic in upload_files"></li>
+                                        </ul>
+                                        <div class="weui-uploader__input-box">
+                                            <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple @change="toUpload"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 投诉内容 -->
+                    <div class="weui-cells__group weui-cells__group_form">
+                        <div class="weui-cells__title">
+                            投诉内容 <span class="required-mark">*</span>
+                        </div>
+                        <div class="weui-cells weui-cells_form">
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <textarea placeholder="请描述你所发生的问题" rows="3" class="weui-textarea" v-model="content"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="weui-form__opr-area">
+                    <a href="javascript:" class="weui-btn weui-btn_primary" @click="submit">
+                        提交
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 提交成功页面 -->
+        <div class="page" v-else>
+            <div class="weui-msg">
+                <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+                <div class="weui-msg__text-area">
+                    <h2 class="weui-msg__title">投诉已提交</h2>
+                    <p class="weui-msg__desc">您的投诉内容已提交处理，我们会尽快核实，并通知您审核结果。感谢您的支持</p>
+                </div>
+                <div class="weui-msg__opr-area">
+                    <p class="weui-btn-area">
+                        <a href="javascript:alert('确认要关闭当前页面吗?');window.location.href='about:blank';window.close();wx.closeWindow()" class="weui-btn weui-btn_primary">关闭</a>
+                    </p>
+                </div>
+                <div class="weui-msg__tips-area"></div>
+                <div class="weui-msg__extra-area">
+                    <div class="weui-footer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // GitHub Pages SPA路由处理
+        (function() {
+            var redirect = sessionStorage.getItem('redirect');
+            if (redirect) {
+                sessionStorage.removeItem('redirect');
+                history.replaceState(null, null, redirect);
+            }
+        })();
+        
+        // 返回投诉页面
+        function backToComplaint() {
+            const currentUrl = new URL(window.location);
+            const urlParams = currentUrl.searchParams;
+            
+            // 移除page参数，返回投诉页面
+            urlParams.delete('page');
+            
+            const complaintUrl = currentUrl.origin + currentUrl.pathname + '?' + urlParams.toString();
+            window.location.href = complaintUrl;
+        }
+    </script>
+    <script src="./assets/js/vue.js"></script>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="https://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,564 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f7fa;
+}
+
+/* 容器布局 */
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    min-height: 100vh;
+}
+
+/* 头部样式 */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* 表单样式 */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.form-label.required::after {
+    content: ' *';
+    color: #ff4757;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-help {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+/* 文件上传区域 */
+.upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    background: #fafafa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #007bff;
+    background: #f0f8ff;
+}
+
+.upload-area.dragover {
+    border-color: #007bff;
+    background: #e3f2fd;
+}
+
+.upload-icon {
+    font-size: 48px;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.upload-text {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.upload-limit {
+    color: #999;
+    font-size: 12px;
+}
+
+/* 图片预览 */
+.image-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.image-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 71, 87, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 按钮样式 */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 提交按钮区域 */
+.form-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* 提示信息 */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* 加载动画 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 投诉详情页样式 */
+.complaint-detail {
+    padding: 20px 0;
+}
+
+.detail-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.detail-content {
+    color: #333;
+    line-height: 1.6;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-processing {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-resolved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-closed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select,
+    .btn {
+        font-size: 16px; /* 防止iOS缩放 */
+    }
+    
+    .image-preview {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 投诉通知页面样式 */
+.notice-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.notice-section h2 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #007bff;
+}
+
+/* 流程步骤 */
+.process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.step-number {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.step-content p {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 注意事项列表 */
+.notice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.notice-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.notice-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.notice-text strong {
+    color: #333;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.notice-text p {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 联系方式 */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.contact-label {
+    font-weight: 600;
+    color: #495057;
+    min-width: 80px;
+}
+
+.contact-value {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* 图片预览模态框 */
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.image-modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    cursor: default;
+}
+
+.image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+}
+
+.image-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 进度时间线 */
+.progress-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.progress-item {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.progress-time {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.progress-content {
+    color: #333;
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+.progress-operator {
+    font-size: 12px;
+    color: #666;
+}
+
+/* 移动端优化 */
+@media (max-width: 480px) {
+    .notice-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .process-step {
+        gap: 10px;
+    }
+    
+    .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+    
+    .notice-item {
+        gap: 10px;
+        padding: 12px;
+    }
+    
+    .notice-icon {
+        font-size: 20px;
+    }
+    
+    .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .contact-label {
+        min-width: auto;
+    }
+}
