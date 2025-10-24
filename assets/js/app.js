@@ -1,7 +1,7 @@
 // API配置
 const API_CONFIG = {
     // 后端API基础地址，需要根据实际部署情况修改
-    BASE_URL: 'https://b3v.cn/',
+    BASE_URL: 'https://b3v.cn/api',
     
     // API端点
     endpoints: {
@@ -317,4 +317,5 @@ var app = new Vue({
 
     }
 });
+
 
