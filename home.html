@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0;url=https://kesu.yituxs.com/">
+    <title>客户宝 - 企业投诉管理平台</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px 20px;
+        }
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🛡️</div>
+        <h1>客户宝</h1>
+        <p>企业投诉管理平台</p>
+        <div class="spinner"></div>
+        <p>正在跳转到主站...</p>
+        <p><small>如果没有自动跳转，请点击下方按钮</small></p>
+        <a href="https://kesu.yituxs.com/" class="btn">访问主站</a>
+    </div>
+
+    <script>
+        // 3秒后如果还没跳转，则显示提示
+        setTimeout(function() {
+            // 手动跳转（备用方案）
+            window.location.href = 'https://kesu.yituxs.com/';
+        }, 100);
+    </script>
+</body>
+</html>
