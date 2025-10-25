@@ -15,7 +15,6 @@
             color: #51628B;
             text-align: center;
             margin-top: 20px;
-            cursor: pointer;
         }
         body{
             max-width: 600px;
@@ -33,7 +32,12 @@
             color: var(--weui-FG-1);
             font-size: 14px;
             line-height: 1.4;
-            background-color:#ECECEC
+            background-color:#ECECEC;
+            margin-bottom: 0;
+        }
+        
+        .x-title + .weui-cells {
+            margin-top: 0;
         }
                 
         .bottom-notice {
@@ -45,7 +49,7 @@
             padding: 15px 20px;
             text-align: center;
             font-size: 11px;
-            color: #999;
+            color: #ddd;
             line-height: 1.4;
             max-width: 600px;
             margin: 0 auto;
@@ -173,12 +177,12 @@
                             <div class="weui-cell__bd">
                                 <div class="weui-uploader">
                                     <div class="weui-uploader__hd">
-                                        <p class="weui-uploader__title">图片证据 <span style="color:red">*</span></p>
+                                        <p class="weui-uploader__title">图片上传</p>
                                         <div class="weui-uploader__info">{{upload_files.length}}/9</div>
                                     </div>
                                     <div class="weui-uploader__bd">
                                         <ul class="weui-uploader__files" id="uploaderFiles">
-                                            <li class="weui-uploader__file" :style="'background-image:url(' + apiBase + pic + ')'" v-for="(pic, index) in upload_files" :key="index"></li>
+                                            <li class="weui-uploader__file" :style="'background-image:url('+pic+')'" v-for="(pic, index) in upload_files" :key="index"></li>
                                         </ul>
                                         <div class="weui-uploader__input-box">
                                             <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple @change="toUpload"/>
