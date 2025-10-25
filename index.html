@@ -6,16 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>投诉</title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.4/weui.min.css">
-    <script>
-        // 页面加载前检查，如果没有redirect参数就跳转
-        (function() {
-            var urlParams = new URLSearchParams(window.location.search);
-            var redirect = urlParams.get('redirect');
-            if (!redirect) {
-                window.location.replace('https://kesu.yituxs.com/');
-            }
-        })();
-    </script>
     <style>
         [v-cloak]{
             display:none;
@@ -248,18 +238,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
     <script>
-        // 检查是否有redirect参数，没有则跳转到主页
-        (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirect = urlParams.get('redirect');
-            
-            // 如果没有redirect参数，立即跳转到主页
-            if (!redirect) {
-                window.location.replace('https://kesu.yituxs.com/');
-                return;
-            }
-        })();
-        
         // ========================================
         // API 配置 - GitHub Pages 前后端分离
         // ========================================
