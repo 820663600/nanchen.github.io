@@ -423,7 +423,12 @@
                             });
                             
                             if (response.data.code === 1 && response.data.data.url) {
-                                this.upload_files.push(response.data.data.url);
+                                // 将相对路径转换为完整URL
+                                let imageUrl = response.data.data.url;
+                                if (imageUrl.startsWith('/')) {
+                                    imageUrl = apiBase.replace('/api', '') + imageUrl;
+                                }
+                                this.upload_files.push(imageUrl);
                             } else {
                                 alert(response.data.msg || '图片上传失败');
                             }
