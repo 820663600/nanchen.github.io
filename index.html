@@ -234,11 +234,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
     <script>
-        // 页面加载时检查，如果没有参数就跳转到后端主站
-        if (!new URLSearchParams(window.location.search).get('redirect')) {
-            window.location.replace('https://kesu.yituxs.com/');
-        }
-        
         // ========================================
         // API 配置 - GitHub Pages 前后端分离
         // ========================================
